@@ -14,13 +14,13 @@ class Cookie {
 
 	public function _setupCookie(){
 		if( ! is_customize_preview() && ! is_admin() && ! empty($_GET[ 'zwpc_preset' ]) ){
-			setcookie( 'zwpc_preset', sanitize_key( $_GET[ 'zwpc_preset' ] ), MINUTE_IN_SECONDS );
+			setcookie( 'zwpc_preset', sanitize_key( $_GET[ 'zwpc_preset' ] ), time()*60*60*3 ); // 3 hours
 		}
 	}
 
 	public function _removeCookie(){
 		if( isset($_GET[ 'zwpc_preset_remove' ]) ){
-			setcookie( 'zwpc_preset', '', time() - HOUR_IN_SECONDS*12 );
+			setcookie( 'zwpc_preset', '', time() - 60*60*3 ); // - 3 hours
 		}
 	}
 

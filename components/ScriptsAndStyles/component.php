@@ -17,6 +17,7 @@ add_action( 'customize_controls_enqueue_scripts', function(){
 		'enqueue' => true,
 		'zwpc_presets' => array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'error_save_before_create_preset' => __( 'Please save current settings before you create a new preset!', 'zerowp-customizer-presets' ),
 		),
 	));
 

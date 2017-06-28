@@ -10,7 +10,7 @@
  * Text Domain: zerowp-customizer-presets
  * Domain Path: /languages
  *
- * Version:     1.0
+ * Version:     1.0-beta
  * 
  */
 
@@ -24,7 +24,7 @@ function zwpc_presets_config( $key = false ){
 	$settings = apply_filters( 'zwpc_presets:config_args', array(
 		
 		// Plugin data
-		'version'          => '1.0',
+		'version'          => '1.0-beta',
 		'min_php_version'  => '5.3',
 		
 		// The list of required plugins. 'slug' => array 'name and uri'

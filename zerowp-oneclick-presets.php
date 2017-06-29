@@ -1,13 +1,13 @@
 <?php
 /* 
- * Plugin Name: ZeroWP Customizer Presets
- * Plugin URI:  http://zerowp.com/customizer-presets
+ * Plugin Name: ZeroWP OneClick Presets
+ * Plugin URI:  http://zerowp.com/oneclick-presets
  * Description: Backup, Import, Export, Live Preview a set of settings from WP customizer
  * Author:      ZeroWP Team
  * Author URI:  http://zerowp.com/
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: zerowp-customizer-presets
+ * Text Domain: zerowp-oneclick-presets
  * Domain Path: /languages
  *
  * Version:     1.0-beta
@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* Plugin configuration
 ----------------------------*/
-function zwpc_presets_config( $key = false ){
-	$settings = apply_filters( 'zwpc_presets:config_args', array(
+function zwpocp_presets_config( $key = false ){
+	$settings = apply_filters( 'zwpocp_presets:config_args', array(
 		
 		// Plugin data
 		'version'          => '1.0-beta',
@@ -45,11 +45,11 @@ function zwpc_presets_config( $key = false ){
 		'action_name'      => 'init',
 
 		// Plugin branding
-		'plugin_name'      => __( 'ZeroWP Customizer Presets', 'zerowp-customizer-presets' ),
-		'id'               => 'zerowp-customizer-presets',
-		'namespace'        => 'ZeroWpCustomizerPresets',
+		'plugin_name'      => __( 'ZeroWP OneClick Presets', 'zerowp-oneclick-presets' ),
+		'id'               => 'zerowp-oneclick-presets',
+		'namespace'        => 'ZeroWpOneClickPresets',
 		'uppercase_prefix' => 'ZWPC_PRESETS',
-		'lowercase_prefix' => 'zwpc_presets',
+		'lowercase_prefix' => 'zwpocp_presets',
 		
 		// Access to plugin directory
 		'file'             => __FILE__,
@@ -84,20 +84,20 @@ function zwpc_presets_config( $key = false ){
 
 /* Define the current version of this plugin.
 -----------------------------------------------------------------------------*/
-define( 'ZWPC_PRESETS_VERSION',         zwpc_presets_config( 'version' ) );
+define( 'ZWPC_PRESETS_VERSION',         zwpocp_presets_config( 'version' ) );
  
 /* Plugin constants
 ------------------------*/
-define( 'ZWPC_PRESETS_PLUGIN_FILE',     zwpc_presets_config( 'file' ) );
-define( 'ZWPC_PRESETS_PLUGIN_BASENAME', zwpc_presets_config( 'basename' ) );
+define( 'ZWPC_PRESETS_PLUGIN_FILE',     zwpocp_presets_config( 'file' ) );
+define( 'ZWPC_PRESETS_PLUGIN_BASENAME', zwpocp_presets_config( 'basename' ) );
 
-define( 'ZWPC_PRESETS_PATH',            zwpc_presets_config( 'path' ) );
-define( 'ZWPC_PRESETS_URL',             zwpc_presets_config( 'url' ) );
-define( 'ZWPC_PRESETS_URI',             zwpc_presets_config( 'url' ) ); // Alias
+define( 'ZWPC_PRESETS_PATH',            zwpocp_presets_config( 'path' ) );
+define( 'ZWPC_PRESETS_URL',             zwpocp_presets_config( 'url' ) );
+define( 'ZWPC_PRESETS_URI',             zwpocp_presets_config( 'url' ) ); // Alias
 
 /* Minimum PHP version required
 ------------------------------------*/
-define( 'ZWPC_PRESETS_MIN_PHP_VERSION', zwpc_presets_config( 'min_php_version' ) );
+define( 'ZWPC_PRESETS_MIN_PHP_VERSION', zwpocp_presets_config( 'min_php_version' ) );
 
 /* Plugin Init
 ----------------------*/
@@ -105,7 +105,7 @@ final class ZWPC_PRESETS_Plugin_Init{
 
 	public function __construct(){
 		
-		$required_plugins = zwpc_presets_config( 'required_plugins' );
+		$required_plugins = zwpocp_presets_config( 'required_plugins' );
 		$missed_plugins   = $this->missedPlugins();
 
 		/* The installed PHP version is lower than required.
@@ -133,7 +133,7 @@ final class ZWPC_PRESETS_Plugin_Init{
 			add_action( 
 				'plugins_loaded', 
 				array( $this, 'getSource' ), 
-				zwpc_presets_config( 'priority' ) 
+				zwpocp_presets_config( 'priority' ) 
 			);
 
 		}
@@ -175,7 +175,7 @@ final class ZWPC_PRESETS_Plugin_Init{
 	 * @return array 
 	 */
 	public function missedPlugins(){
-		$required = zwpc_presets_config( 'required_plugins' );
+		$required = zwpocp_presets_config( 'required_plugins' );
 		$active   = $this->activePlugins();
 		$diff     = array_diff_key( $required, $active );
 

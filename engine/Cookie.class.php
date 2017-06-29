@@ -1,7 +1,7 @@
 <?php
-namespace ZeroWpCustomizerPresets;
+namespace ZeroWpOneClickPresets;
 
-use ZeroWpCustomizerPresets\Access;
+use ZeroWpOneClickPresets\Access;
 
 class Cookie {
 	
@@ -13,31 +13,31 @@ class Cookie {
 	}
 
 	public function _setupCookie(){
-		if( ! is_customize_preview() && ! is_admin() && ! empty($_GET[ 'zwpc_preset' ]) ){
-			setcookie( 'zwpc_preset', sanitize_key( $_GET[ 'zwpc_preset' ] ), time()*60*60*3 ); // 3 hours
+		if( ! is_customize_preview() && ! is_admin() && ! empty($_GET[ 'zwpocp_preset' ]) ){
+			setcookie( 'zwpocp_preset', sanitize_key( $_GET[ 'zwpocp_preset' ] ), time()*60*60*3 ); // 3 hours
 		}
 	}
 
 	public function _removeCookie(){
-		if( isset($_GET[ 'zwpc_preset_remove' ]) ){
-			setcookie( 'zwpc_preset', '', time() - 60*60*3 ); // - 3 hours
+		if( isset($_GET[ 'zwpocp_preset_remove' ]) ){
+			setcookie( 'zwpocp_preset', '', time() - 60*60*3 ); // - 3 hours
 		}
 	}
 
 	public function _removeCookieRedirect(){
-		if( isset($_GET[ 'zwpc_preset_remove' ]) ){
+		if( isset($_GET[ 'zwpocp_preset_remove' ]) ){
 			wp_redirect( site_url() );
 			exit();
 		}
 	}
 
 	public static function current(){
-		if( !empty( $_GET[ 'zwpc_preset' ] ) ){
-			$cookie = sanitize_key( $_GET[ 'zwpc_preset' ] );
+		if( !empty( $_GET[ 'zwpocp_preset' ] ) ){
+			$cookie = sanitize_key( $_GET[ 'zwpocp_preset' ] );
 		}
 
-		else if( !empty( $_COOKIE[ 'zwpc_preset' ] ) ){
-			$cookie = sanitize_key( $_COOKIE[ 'zwpc_preset' ] );
+		else if( !empty( $_COOKIE[ 'zwpocp_preset' ] ) ){
+			$cookie = sanitize_key( $_COOKIE[ 'zwpocp_preset' ] );
 		}
 
 		else{
@@ -61,12 +61,12 @@ class Cookie {
 				'parent' => null,
 				'href' => esc_url_raw( 
 					add_query_arg( 
-						array( 'zwpc_preset_remove' => 1 ), 
-						remove_query_arg( 'zwpc_preset', site_url() )
+						array( 'zwpocp_preset_remove' => 1 ), 
+						remove_query_arg( 'zwpocp_preset', site_url() )
 					) 
 				),
 				'title' => '<span style="display: inline-block;background: #d73c2c;padding: 5px 8px 6px;margin: 0;height: auto;line-height: 1;color: #fff;">'. 
-					sprintf( __( 'Preset "%s" is active: Turn OFF', 'zerowp-customizer-presets' ), $preset_name ) 
+					sprintf( __( 'Preset "%s" is active: Turn OFF', 'zerowp-oneclick-presets' ), $preset_name ) 
 				.'</span>',
 			));
 		}

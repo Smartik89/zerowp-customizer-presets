@@ -1,5 +1,5 @@
 <?php
-namespace ZeroWpCustomizerPresets;
+namespace ZeroWpOneClickPresets;
 
 class ControlBase extends \WP_Customize_Control {
 	public function __construct( $manager, $id, $args = array() ) {

@@ -1,8 +1,8 @@
 <?php
-namespace ZeroWpCustomizerPresets;
+namespace ZeroWpOneClickPresets;
 
-use ZeroWpCustomizerPresets\Access;
-use ZeroWpCustomizerPresets\FileManager;
+use ZeroWpOneClickPresets\Access;
+use ZeroWpOneClickPresets\FileManager;
 
 class Ajax {
 	
@@ -12,10 +12,10 @@ class Ajax {
 		$this->access = new Access;
 		$this->file_manager = new FileManager;
 
-		add_action( 'wp_ajax_zwpc_presets_create_preset', array( $this, '_ajaxCreatePreset' ) );
-		add_action( 'wp_ajax_zwpc_presets_delete_preset', array( $this, '_ajaxDeletePreset' ) );
-		add_action( 'wp_ajax_zwpc_presets_download_preset', array( $this, '_ajaxDownloadPreset' ) );
-		add_action( 'wp_ajax_zwpc_presets_import_preset', array( $this, '_ajaxImportPreset' ) );
+		add_action( 'wp_ajax_zwpocp_presets_create_preset', array( $this, '_ajaxCreatePreset' ) );
+		add_action( 'wp_ajax_zwpocp_presets_delete_preset', array( $this, '_ajaxDeletePreset' ) );
+		add_action( 'wp_ajax_zwpocp_presets_download_preset', array( $this, '_ajaxDownloadPreset' ) );
+		add_action( 'wp_ajax_zwpocp_presets_import_preset', array( $this, '_ajaxImportPreset' ) );
 	}
 
 	public function _ajaxCreatePreset(){

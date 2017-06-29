@@ -13,9 +13,9 @@
 
 		// Defaults
 		var settings = $.extend({
-			addSelector: '.zwpc_preset_uploader',
-			mediaContainder: '#zwpc_preset_add_image',
-			inputImageSelector: '#zwpc_preset_image',
+			addSelector: '.zwpocp_preset_uploader',
+			mediaContainder: '#zwpocp_preset_add_image',
+			inputImageSelector: '#zwpocp_preset_image',
 			frameMethod: 'select', //select or post
 			multiple: false,
 		}, options );
@@ -31,7 +31,8 @@
 		// Build structure
 		this.build = function() {
 			var self = false;
-			var frame;
+			var image_frame;
+			var zip_frame;
 
 			var _base = {
 
@@ -43,44 +44,47 @@
 						var _mode = false;
 						if( $(this).hasClass('add-image') ){
 							_mode = 'image';
-						}
-						else if( $(this).hasClass('add-file') ){
-							_mode = 'file';
+							self.doFrame( _this, _mode, image_frame );
 						}
 						else if( $(this).hasClass('add-zip') ){
 							_mode = 'zip';
+							self.doFrame( _this, _mode, zip_frame );
 						}
-
-						// If the media frame already exists, reopen it.
-						if ( frame ) {
-							frame.open();
-							return;
-						}
-
-						// Create a new media frame
-						frame = self.createMediaFrame( _mode );
-
-						// When an image is selected in the media frame...
-						frame.on( 'select', function() {
-
-							// Get media attachment details from the frame state
-							var attachments = frame.state().get('selection').toJSON();
-							
-							console.log( attachments );
-
-							if( _mode === 'image' ){
-								self.setMedia( attachments );
-							}
-							else if( _mode === 'zip' ){
-								self.setZip( _this, attachments );
-							}
-
-						});
-
-						// Finally, open the modal on click
-						frame.open();
 
 					});
+				},
+
+				doFrame: function( _this, _mode, frame ){
+
+					// If the media frame already exists, reopen it.
+					if ( frame ) {
+						frame.open();
+						return;
+					}
+
+					// Create a new media frame
+					frame = self.createMediaFrame( _mode );
+
+					// When an image is selected in the media frame...
+					frame.on( 'select', function() {
+
+						// Get media attachment details from the frame state
+						var attachments = frame.state().get('selection').toJSON();
+						
+						console.log( attachments );
+
+						if( _mode === 'image' ){
+							self.setMedia( attachments );
+						}
+						else if( _mode === 'zip' ){
+							self.setZip( _this, attachments );
+						}
+
+					});
+
+					// Finally, open the modal on click
+					frame.open();
+
 				},
 
 				// Create a media frame
@@ -100,6 +104,11 @@
 							type: 'application/zip'
 						};
 					}
+					else if( _mode === 'image' ){
+						_defaults.library = {
+							type: 'image'
+						};
+					}
 
 					return wp.media( _defaults );
 				},
@@ -109,13 +118,13 @@
 					_image = ( attachments[0] ) ? attachments[0] : false;
 					if( _image && _image.url ){
 						var _thumb = false;
-						if( _image.sizes.medium.url ){
+						if( _image.sizes.medium ){
 							_thumb = _image.sizes.medium.url;
 						}
 						else{
 							_thumb = _image.url;
 						}
-						plugin.find( settings.addSelector ).html( '<img src="'+ _thumb +'" />' );
+						plugin.find( settings.addSelector + '.add_image' ).html( '<img src="'+ _thumb +'" />' );
 						plugin.find( settings.inputImageSelector ).val( _thumb ).trigger('change');
 					}
 				},
@@ -129,15 +138,15 @@
 				},
 
 				downloadPreset: function(){
-					$( document ).on( 'click', '#zwpc_preset_download', function(){
+					$( document ).on( 'click', '#zwpocp_preset_download', function(){
 						var _this = $( this );
 						var _id = _this.data('preset-id');
 					
 						$.ajax({
-							url: zwpc_presets.ajax_url,
+							url: zwpocp_presets.ajax_url,
 							type: 'POST',
 							data: {
-								'action': 'zwpc_presets_download_preset',
+								'action': 'zwpocp_presets_download_preset',
 								'preset_id': _id,
 							},
 							timeout: 90000, //1.5 minutes
@@ -162,22 +171,22 @@
 				},
 
 				deletePreset: function(){
-					$( document ).on( 'click', '#zwpc_preset_delete', function(){
+					$( document ).on( 'click', '#zwpocp_preset_delete', function(){
 						var _this = $( this );
 						var _id = _this.data('preset-id');
 					
 						$.ajax({
-							url: zwpc_presets.ajax_url,
+							url: zwpocp_presets.ajax_url,
 							type: 'POST',
 							data: {
-								'action': 'zwpc_presets_delete_preset',
+								'action': 'zwpocp_presets_delete_preset',
 								'preset_id': _id,
 							},
 							timeout: 90000, //1.5 minutes
 							success: function(data, textStatus, xhr) {
 								// console.log( data );
 								if( data === 'preset_deleted' ){
-									$(document).find( '#zwpc-preset-'+ _id ).slideUp( 150, function(){
+									$(document).find( '#zwpocp-preset-'+ _id ).slideUp( 150, function(){
 										$(this).remove();
 									} );
 								}
@@ -197,17 +206,17 @@
 
 				canCreatePreset: function(){
 					var _ready_to_create_preset = $('#save').prop('disabled');
-					var _msg = zwpc_presets.error_save_before_create_preset;
+					var _msg = zwpocp_presets.error_save_before_create_preset;
 					var _r = false;
 
 					if( ! _ready_to_create_preset ){
-						if( $('.zwpc-preset-create-block').find('.zwpc-preset-create-error').length < 1 ){
-							$('.zwpc-preset-create-block').prepend( '<div class="zwpc-preset-create-error">'+ _msg +'</div>' );
+						if( $('.zwpocp-preset-create-block').find('.zwpocp-preset-create-error').length < 1 ){
+							$('.zwpocp-preset-create-block').prepend( '<div class="zwpocp-preset-create-error">'+ _msg +'</div>' );
 						}
 						_r = false;
 					}
 					else{
-						$('.zwpc-preset-create-block').find('.zwpc-preset-create-error').remove();
+						$('.zwpocp-preset-create-block').find('.zwpocp-preset-create-error').remove();
 						_r = true;
 					}
 
@@ -215,21 +224,21 @@
 				},
 
 				createPreset: function(){
-					$( '#zwpc_preset_create' ).on( 'click', function(){
+					$( '#zwpocp_preset_create' ).on( 'click', function(){
 						
 						if( self.canCreatePreset() === false ){
 							return false;
 						}
 
-						var _value = $( '#zwpc_preset_name' ).val();
-						var _image = $( '#zwpc_preset_image' ).val();
+						var _value = $( '#zwpocp_preset_name' ).val();
+						var _image = $( '#zwpocp_preset_image' ).val();
 						if( _value.length > 0 ){
-							$( '#zwpc_preset_name' ).removeClass('invalid-name');
+							$( '#zwpocp_preset_name' ).removeClass('invalid-name');
 							$.ajax({
-								url: zwpc_presets.ajax_url,
+								url: zwpocp_presets.ajax_url,
 								type: 'POST',
 								data: {
-									'action': 'zwpc_presets_create_preset',
+									'action': 'zwpocp_presets_create_preset',
 									'name': _value,
 									'image': _image,
 								},
@@ -239,9 +248,9 @@
 									// console.log( data );
 
 									if( data.template ){
-										$('#zwpc-presets-list').prepend( data.template );
-										$('#zwpc_preset_name').val('').trigger('change');
-										$('#zwpc_preset_image').val('').trigger('change');
+										$('#zwpocp-presets-list').prepend( data.template );
+										$('#zwpocp_preset_name').val('').trigger('change');
+										$('#zwpocp_preset_image').val('').trigger('change');
 										plugin.find( settings.addSelector ).html('<span class="dashicons dashicons-format-image"></span>');
 									}
 
@@ -257,22 +266,22 @@
 							
 						}
 						else{
-							$( '#zwpc_preset_name' ).addClass('invalid-name');
+							$( '#zwpocp_preset_name' ).addClass('invalid-name');
 						}
 					} );
 				},
 
 				importPreset: function(){
-					$( '.zwpc_preset_ready_for_import' ).on( 'click', function(){
+					$( '.zwpocp_preset_ready_for_import' ).on( 'click', function(){
 						
 						var _zip_url = $( this ).parent().find('.zip-url').val();
 
 						if( _zip_url.length > 0 ){
 							$.ajax({
-								url: zwpc_presets.ajax_url,
+								url: zwpocp_presets.ajax_url,
 								type: 'POST',
 								data: {
-									'action': 'zwpc_presets_import_preset',
+									'action': 'zwpocp_presets_import_preset',
 									'zip_url': _zip_url,
 								},
 								timeout: 90000, //1.5 minutes
@@ -281,7 +290,7 @@
 									console.log( data );
 
 									if( data.status === 'imported' && data.template ){
-										$('#zwpc-presets-list').prepend( data.template );
+										$('#zwpocp-presets-list').prepend( data.template );
 									}
 
 								},

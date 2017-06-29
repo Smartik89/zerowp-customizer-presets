@@ -1,7 +1,7 @@
 <?php
-namespace ZeroWpCustomizerPresets;
+namespace ZeroWpOneClickPresets;
 
-use ZeroWpCustomizerPresets\FileManager;
+use ZeroWpOneClickPresets\FileManager;
 
 class Access {
 
@@ -11,7 +11,7 @@ class Access {
 	
 	public function __construct(){
 		$this->theme_slug = get_stylesheet();
-		$this->main_option_key = 'zwpc_presets_customizer_presets';
+		$this->main_option_key = 'zwpocp_presets_oneclick_presets';
 		$this->theme_option_key = $this->main_option_key . '_' . $this->theme_slug;
 		$this->file_manager = new FileManager;
 	}
@@ -77,7 +77,7 @@ class Access {
 		update_option( $this->theme_option_key, $presets );
 		$this->_addCurrentThemeToTheListInMainOption();
 
-		do_action( 'zwpc_preset:create_preset', $preset_id, $this );
+		do_action( 'zwpocp_preset:create_preset', $preset_id, $this );
 	}
 
 	public function deletePreset( $preset_id ){
@@ -90,7 +90,7 @@ class Access {
 			unlink( $this->zipFilePath( $preset_id ) );
 		}
 
-		do_action( 'zwpc_preset:delete_preset', $preset_id );
+		do_action( 'zwpocp_preset:delete_preset', $preset_id );
 	}
 
 	/*
@@ -137,7 +137,7 @@ class Access {
 				str_ireplace( str_replace( '/', '\/', $this->file_manager->getUploadUrl() ), '{{IMG_ABSTRACT_PRESET_URL}}/img/', $json_data )
 			);
 
-			do_action( 'zwpc_presets:before_zip_preset', $preset_id, $this );
+			do_action( 'zwpocp_presets:before_zip_preset', $preset_id, $this );
 
 			/* Create the zip archive of this preset
 			---------------------------------------------*/
@@ -149,7 +149,7 @@ class Access {
 			
 		// }
 
-		do_action( 'zwpc_preset:download_preset', $preset_id );
+		do_action( 'zwpocp_preset:download_preset', $preset_id );
 
 		return $zip_file;
 	}
@@ -260,19 +260,19 @@ class Access {
 		$name        = !empty( $preset_data[ 'name' ] ) ? $preset_data[ 'name' ] : $preset_id;
 		$id          = esc_attr( $preset_id );
 		$time        = !empty( $preset_data[ 'time' ] ) ? date_i18n( 'Y-m-d H:i:s', $preset_data[ 'time' ] ) : '';
-		$url         = esc_url_raw( add_query_arg( array( 'zwpc_preset' => $id ), home_url() ) );
+		$url         = esc_url_raw( add_query_arg( array( 'zwpocp_preset' => $id ), home_url() ) );
 		$image       = !empty( $preset_data[ 'image' ] ) ? '<div class="preset-image"><img src="'. $preset_data[ 'image' ] .'" /></div>' : '';
 
-		return '<li id="zwpc-preset-'. $id .'"><div class="preset" data-preset-id="'. $id .'">
+		return '<li id="zwpocp-preset-'. $id .'"><div class="preset" data-preset-id="'. $id .'">
 			<a href="'. $url .'" target="_blank" class="preset-preview">
 				'. $image .'
 				<div class="preset-title">'. $name .' </div>
 				<div class="preset-creation-date">'. $time .'</div>
 			</a>
 			<div class="preset-actions">
-				<span id="zwpc_preset_use" data-preset-id="'. $id .'" class="preset-use">'. __( 'Use preset', 'zerowp-customizer-presets' ) .'</span>
-				<span id="zwpc_preset_download" data-preset-id="'. $id .'" class="preset-download" title="'. __( 'Download', 'zerowp-customizer-presets' ) .'"><span class="dashicons dashicons-download"></span></span>
-				<span id="zwpc_preset_delete" data-preset-id="'. $id .'" class="preset-delete" title="'. __( 'Delete', 'zerowp-customizer-presets' ) .'"><span class="dashicons dashicons-trash"></span></span>
+				<span id="zwpocp_preset_use" data-preset-id="'. $id .'" class="preset-use">'. __( 'Use preset', 'zerowp-oneclick-presets' ) .'</span>
+				<span id="zwpocp_preset_download" data-preset-id="'. $id .'" class="preset-download" title="'. __( 'Download', 'zerowp-oneclick-presets' ) .'"><span class="dashicons dashicons-download"></span></span>
+				<span id="zwpocp_preset_delete" data-preset-id="'. $id .'" class="preset-delete" title="'. __( 'Delete', 'zerowp-oneclick-presets' ) .'"><span class="dashicons dashicons-trash"></span></span>
 			</div>
 		</div></li>';
 	}

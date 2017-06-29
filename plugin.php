@@ -48,7 +48,7 @@ final class ZWPC_PRESETS_Plugin{
 	 * @return void 
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'zerowp-customizer-presets' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'zerowp-oneclick-presets' ), '1.0' );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -59,7 +59,7 @@ final class ZWPC_PRESETS_Plugin{
 	 * @return void 
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'zerowp-customizer-presets' ), '1.0' );
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'zerowp-oneclick-presets' ), '1.0' );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -71,7 +71,7 @@ final class ZWPC_PRESETS_Plugin{
 	 * @return mixed 
 	 */
 	public function config( $key = false ){
-		return zwpc_presets_config( $key );
+		return zwpocp_presets_config( $key );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -87,7 +87,7 @@ final class ZWPC_PRESETS_Plugin{
 		include_once $this->rootPath() . "autoloader.php";
 		include_once $this->rootPath() . "functions.php";
 		
-		$this->assets = new ZeroWpCustomizerPresets\Assets\Manage;
+		$this->assets = new ZeroWpOneClickPresets\Assets\Manage;
 
 		/* Activation and deactivation hooks
 		-----------------------------------------*/
@@ -104,7 +104,7 @@ final class ZWPC_PRESETS_Plugin{
 
 		/* Plugin fully loaded and executed
 		----------------------------------------*/
-		do_action( 'zwpc_presets:loaded' );
+		do_action( 'zwpocp_presets:loaded' );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -117,12 +117,12 @@ final class ZWPC_PRESETS_Plugin{
 	 * @return void 
 	 */
 	public function init() {
-		do_action( 'zwpc_presets:before_init' );
+		do_action( 'zwpocp_presets:before_init' );
 
 		$this->loadTextDomain();
 
 		// Call plugin classes/functions here.
-		do_action( 'zwpc_presets:init' );
+		do_action( 'zwpocp_presets:init' );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -134,7 +134,7 @@ final class ZWPC_PRESETS_Plugin{
 	 */
 	public function loadTextDomain(){
 		load_plugin_textdomain( 
-			'zerowp-customizer-presets', 
+			'zerowp-oneclick-presets', 
 			false, 
 			$this->config( 'lang_path' ) 
 		);
@@ -188,7 +188,7 @@ final class ZWPC_PRESETS_Plugin{
 	 */
 	public function onActivation() {
 		// Code to be executed on plugin activation
-		do_action( 'zwpc_presets:on_activation' );
+		do_action( 'zwpocp_presets:on_activation' );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -200,7 +200,7 @@ final class ZWPC_PRESETS_Plugin{
 	 */
 	public function onDeactivation() {
 		// Code to be executed on plugin deactivation
-		do_action( 'zwpc_presets:on_deactivation' );
+		do_action( 'zwpocp_presets:on_deactivation' );
 	}
 
 	//------------------------------------//--------------------------------------//
@@ -252,7 +252,7 @@ final class ZWPC_PRESETS_Plugin{
 Main plugin instance
 -------------------------------------------------------------------------------
 */
-function zwpc_presets() {
+function zwpocp_presets() {
 	return ZWPC_PRESETS_Plugin::instance();
 }
 
@@ -261,4 +261,4 @@ function zwpc_presets() {
 Rock it!
 -------------------------------------------------------------------------------
 */
-zwpc_presets();
+zwpocp_presets();

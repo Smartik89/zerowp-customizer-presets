@@ -1,8 +1,8 @@
 <?php
-namespace ZeroWpCustomizerPresets;
+namespace ZeroWpOneClickPresets;
 
-use ZeroWpCustomizerPresets\Access;
-use ZeroWpCustomizerPresets\Cookie;
+use ZeroWpOneClickPresets\Access;
+use ZeroWpOneClickPresets\Cookie;
 
 class Filter {
 	

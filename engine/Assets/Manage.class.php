@@ -1,5 +1,5 @@
 <?php 
-namespace ZeroWpCustomizerPresets\Assets;
+namespace ZeroWpOneClickPresets\Assets;
 
 class Manage{
 

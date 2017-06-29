@@ -12,7 +12,7 @@ class ZWPC_PRESETS_Plugin_Autoloader{
 	-------------------------------------------------------------------------------
 	*/
 	public function autoloadEngine( $class ){
-		$prefix   = zwpc_presets_config( 'namespace' ) .'\\';
+		$prefix   = zwpocp_presets_config( 'namespace' ) .'\\';
 		$base_dir = ZWPC_PRESETS_PATH .'engine/';
 
 		$this->locateFile( $class, $prefix, $base_dir );
@@ -24,7 +24,7 @@ class ZWPC_PRESETS_Plugin_Autoloader{
 	-------------------------------------------------------------------------------
 	*/
 	public function autoloadComponents( $class ){
-		$prefix   = zwpc_presets_config( 'namespace' ) .'\\Component\\';
+		$prefix   = zwpocp_presets_config( 'namespace' ) .'\\Component\\';
 		$base_dir = ZWPC_PRESETS_PATH .'components/';
 
 		$this->locateFile( $class, $prefix, $base_dir );

@@ -1,5 +1,5 @@
 <?php 
-namespace ZeroWpCustomizerPresets;
+namespace ZeroWpOneClickPresets;
 
 class FileManager {
 	

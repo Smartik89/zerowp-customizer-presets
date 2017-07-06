@@ -17,7 +17,10 @@ add_action( 'customize_controls_enqueue_scripts', function(){
 		'enqueue' => true,
 		'zwpocp_presets' => array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'customizer_url' => admin_url( 'customize.php' ),
 			'error_save_before_create_preset' => __( 'Please save current settings before you create a new preset!', 'zerowp-oneclick-presets' ),
+			'select_screenshot' => __( 'Select screenshot', 'zerowp-oneclick-presets' ),
+			'select_preset' => __( 'Select preset', 'zerowp-oneclick-presets' ),
 		),
 	));
 

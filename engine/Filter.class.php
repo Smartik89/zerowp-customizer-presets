@@ -15,18 +15,18 @@ class Filter {
 	}
 
 	public function _setupOptionFilters(){
-		if( ! is_customize_preview() && ! is_admin() && ! empty( Cookie::current() ) ){
+		if( ! is_customize_preview() && ! is_admin() && ! empty( Cookie::current() ) && $this->access->presetExists( Cookie::current() ) ){
 
 			/* Modify theme mods
 			-------------------------*/
 			$theme_slug = get_stylesheet();
 			add_filter( 'option_theme_mods_' . $theme_slug, array( $this, 'filterThemeMods' ), 99 );
 
-
 			// Modify other theme mods
 			add_filter( 'option_show_on_front', array( $this, 'filter_show_on_front' ), 99 );
 			add_filter( 'option_page_on_front', array( $this, 'filter_page_on_front' ), 99 );
-			add_filter( 'option_page_for_posts', array( $this, 'filter_page_for_posts' ), 99 );
+
+			add_filter( 'option_sidebars_widgets', array( $this, 'filter_sidebars_widgets' ), 99 );
 
 		}
 	}
@@ -61,6 +61,16 @@ class Filter {
 		}
 
 		return $option_value;
+	}
+
+	public function filter_sidebars_widgets( $option ){
+		$sidebars = $this->access->getPresetSidebars( sanitize_key( Cookie::current() ) );
+		
+		if( !empty( $sidebars ) ){
+			$option = $sidebars;
+		}
+
+		return $option;
 	}
 
 }

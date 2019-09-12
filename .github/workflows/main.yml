@@ -9,7 +9,7 @@ jobs:
     
     steps:
     - name: Deploy
-      run: ./deploy.sh
+      run: ls -la
       env:
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}

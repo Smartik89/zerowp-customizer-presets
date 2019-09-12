@@ -4,7 +4,7 @@ PLUGIN_SLUG="${PWD##*/}"
 TAG=$(sed -e "s/refs\/tags\///g" <<< $GITHUB_REF)
 
 sed -i -e "s/__STABLE_TAG__/$TAG/g" ./src/readme.txt
-sed -i -e "s/__STABLE_TAG__/$TAG/g" ./src/plugin-base.php
+sed -i -e "s/__STABLE_TAG__/$TAG/g" "./src/$PLUGIN_SLUG.php"
 svn co --depth immediates "https://plugins.svn.wordpress.org/$PLUGIN_SLUG" ./svn
 
 svn update --set-depth infinity ./svn/trunk

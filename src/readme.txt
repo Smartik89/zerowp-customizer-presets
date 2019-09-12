@@ -3,8 +3,8 @@ Contributors: _smartik_
 Donate link: https://paypal.me/zerowp
 Tags: backup, import, export, customize, preset, preview, settings, theme
 Requires at least: 4.7
-Tested up to: 4.8
-Stable tag: 1.0
+Tested up to: 5.3.0
+Stable tag: __STABLE_TAG__
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 

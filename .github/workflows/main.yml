@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Deploy
-      run: ls -la
-      env:
-        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+      - uses: actions/checkout@master
+      - name: Deploy
+        run: ls -la
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}

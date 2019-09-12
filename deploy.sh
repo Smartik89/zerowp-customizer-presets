@@ -2,28 +2,46 @@
 
 PLUGIN_SLUG="${PWD##*/}"
 
-sed -i -e "s/__STABLE_TAG__/$TRAVIS_TAG/g" ./src/readme.txt
-sed -i -e "s/__STABLE_TAG__/$TRAVIS_TAG/g" ./src/plugin-base.php
-svn co --depth immediates "https://plugins.svn.wordpress.org/$PLUGIN_SLUG" ./svn
+echo "slug"
+echo $PLUGIN_SLUG
 
-svn update --set-depth infinity ./svn/trunk
-svn update --set-depth infinity ./svn/assets
-svn update --set-depth infinity ./svn/tags/$TRAVIS_TAG
+echo "username"
+echo $SVN_USERNAME
 
-cp -R ./src/* ./svn/trunk
-cp -R ./wp_org/assets/* ./svn/assets
+echo "password"
+echo $SVN_PASSWORD
 
-# 3. Switch to SVN repository
-cd ./svn
+echo "repository"
+echo $GITHUB_REPOSITORY
 
-svn add --force trunk
-svn add --force assets
+echo "workspace"
+echo $GITHUB_WORKSPACE
 
-svn cp trunk tags/$TRAVIS_TAG
+echo "ref"
+echo $GITHUB_REF
 
-svn add --force tags
-
-svn ci  --message "Release $TRAVIS_TAG" \
-        --username $SVN_USERNAME \
-        --password $SVN_PASSWORD \
-        --non-interactive
+#sed -i -e "s/__STABLE_TAG__/$TRAVIS_TAG/g" ./src/readme.txt
+#sed -i -e "s/__STABLE_TAG__/$TRAVIS_TAG/g" ./src/plugin-base.php
+#svn co --depth immediates "https://plugins.svn.wordpress.org/$PLUGIN_SLUG" ./svn
+#
+#svn update --set-depth infinity ./svn/trunk
+#svn update --set-depth infinity ./svn/assets
+#svn update --set-depth infinity ./svn/tags/$TRAVIS_TAG
+#
+#cp -R ./src/* ./svn/trunk
+#cp -R ./wp_org/assets/* ./svn/assets
+#
+## 3. Switch to SVN repository
+#cd ./svn
+#
+#svn add --force trunk
+#svn add --force assets
+#
+#svn cp trunk tags/$TRAVIS_TAG
+#
+#svn add --force tags
+#
+#svn ci  --message "Release $TRAVIS_TAG" \
+#        --username $SVN_USERNAME \
+#        --password $SVN_PASSWORD \
+#        --non-interactive

@@ -20,7 +20,7 @@ echo $GITHUB_WORKSPACE
 echo "ref"
 echo $GITHUB_REF
 
-TAG=$(sed -e "s/refs\/tags\//''/g" <<< $GITHUB_REF)
+TAG=$(sed -e "s/refs\/tags\///g" <<< $GITHUB_REF)
 
 echo $TAG
 

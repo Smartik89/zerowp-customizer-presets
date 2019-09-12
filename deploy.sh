@@ -20,6 +20,10 @@ echo $GITHUB_WORKSPACE
 echo "ref"
 echo $GITHUB_REF
 
+TAG=$(sed -e "s/refs\/tags\///g" <<< $GITHUB_REF)
+
+echo $TAG
+
 #sed -i -e "s/__STABLE_TAG__/$TRAVIS_TAG/g" ./src/readme.txt
 #sed -i -e "s/__STABLE_TAG__/$TRAVIS_TAG/g" ./src/plugin-base.php
 #svn co --depth immediates "https://plugins.svn.wordpress.org/$PLUGIN_SLUG" ./svn
